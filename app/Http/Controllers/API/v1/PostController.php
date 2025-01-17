@@ -22,7 +22,9 @@ class PostController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $posts = Post::where('user_id', auth()->id())->get();
+            $posts = Post::where('user_id', auth()->id())
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
 
             return response()->json([
                 'status' => 'success',

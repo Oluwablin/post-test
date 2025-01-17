@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdatePostRequest extends FormRequest
 {
@@ -14,6 +15,15 @@ class UpdatePostRequest extends FormRequest
         $post = $this->route('post');
 
         return $post && $this->user()->id === $post->user_id;
+    }
+
+    public function failedAuthorization()
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'message' => 'You are not authorized to update this post.',
+            'data' => null,
+        ], 403));
     }
 
     /**

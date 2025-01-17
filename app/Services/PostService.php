@@ -23,14 +23,18 @@ class PostService
         }
     }
 
-    public function updatePost($post, $data)
+    public function updatePost(Post $post, array $data, $userId)
     {
+        if ($post->user_id !== $userId) {
+            throw new \Exception('You are not authorized to update this post.');
+        }
+
         try {
             $post->update($data);
             return $post;
         } catch (\Exception $e) {
             Log::error('Error updating post: ' . $e->getMessage());
-            throw new \Exception('Unable to update post. Please try again.');
+            throw new \Exception('Failed to update the post.');
         }
     }
 

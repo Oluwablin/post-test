@@ -34,6 +34,14 @@ Run the following command
 cp .env.example .env
 ```
 
+### Generate the JWT secret key
+
+Run the following command
+
+```bash
+php artisan jwt:secret
+```
+
 This should create an exact copy of the .env.example file. Name the newly created file .env and update it with your local environment variables (database connection info and others).
 
 ### Create a copy of your .env file
